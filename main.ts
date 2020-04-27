@@ -2,7 +2,20 @@ namespace SpriteKind {
     export const topWall = SpriteKind.create()
     export const wall = SpriteKind.create()
     export const brick = SpriteKind.create()
+    export const ball = SpriteKind.create()
 }
+sprites.onOverlap(SpriteKind.ball, SpriteKind.wall, function (sprite, otherSprite) {
+    sprite.setVelocity(-1 * sprite.vx, 1 * sprite.vy)
+})
+sprites.onOverlap(SpriteKind.ball, SpriteKind.topWall, function (sprite, otherSprite) {
+    sprite.setVelocity(1 * sprite.vx, -1 * sprite.vy)
+})
+sprites.onOverlap(SpriteKind.ball, SpriteKind.Player, function (sprite, otherSprite) {
+    sprite.setVelocity((sprite.x - otherSprite.x) * 3, -1 * sprite.vy)
+    if (sprite.vy > -150) {
+        sprite.vy += -5
+    }
+})
 function buildSetBricks () {
     for (let index = 0; index <= 6; index++) {
         for (let index2 = 0; index2 < 4; index2++) {
@@ -419,7 +432,7 @@ let ballVar = sprites.create(img`
 1 1 1 1 
 1 1 1 1 
 . 1 1 . 
-`, SpriteKind.Player)
+`, SpriteKind.ball)
 ballVar.setFlag(SpriteFlag.StayInScreen, true)
 info.setLife(3)
 info.setScore(0)
@@ -438,7 +451,7 @@ game.onUpdate(function () {
         ballVar.setVelocity(Math.randomRange(-15, 15), -50)
         startBallVar = 2
     }
-    if (ballVar.x > 115) {
+    if (ballVar.y > 115) {
         startBallVar = 0
         info.changeLifeBy(-1)
     }
