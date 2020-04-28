@@ -41,10 +41,10 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.superBrick, function (sprite, othe
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     if (otherSprite == superProjectile) {
+        otherSprite.destroy()
         _super = 1
         pause(5000)
         _super = 0
-        otherSprite.destroy()
     } else if (otherSprite == hpProjectile) {
         if (info.life() != 3) {
             info.changeLifeBy(1)
