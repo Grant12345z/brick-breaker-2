@@ -10,12 +10,15 @@ namespace SpriteKind {
 }
 sprites.onOverlap(SpriteKind.ball, SpriteKind.brick, function (sprite, otherSprite) {
     otherSprite.destroy(effects.ashes, 200)
-    if (_super != 1) {
+    if (_super != 1 || sprite == secondBallVar) {
         sprite.setVelocity(1 * sprite.vx, -1 * sprite.vy)
     }
     numBricks += -1
     info.changeScoreBy(15)
 })
+function bounce () {
+	
+}
 sprites.onOverlap(SpriteKind.ball, SpriteKind.wall, function (sprite, otherSprite) {
     sprite.setVelocity(-1 * sprite.vx, 1 * sprite.vy)
 })
@@ -24,7 +27,7 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.topWall, function (sprite, otherSp
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.superBrick, function (sprite, otherSprite) {
     otherSprite.destroy(effects.ashes, 200)
-    if (_super != 1) {
+    if (_super != 1 || sprite == secondBallVar) {
         sprite.setVelocity(1 * sprite.vx, -1 * sprite.vy)
     }
     numBricks += -1
@@ -67,7 +70,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.hpBrick, function (sprite, otherSprite) {
     otherSprite.destroy(effects.ashes, 200)
-    if (_super != 1) {
+    if (_super != 1 || sprite == secondBallVar) {
         sprite.setVelocity(1 * sprite.vx, -1 * sprite.vy)
     }
     numBricks += -1
@@ -445,7 +448,7 @@ f f f f f f f f f f f f f f f f
 }
 sprites.onOverlap(SpriteKind.ball, SpriteKind.ballBrick, function (sprite, otherSprite) {
     otherSprite.destroy(effects.ashes, 200)
-    if (_super != 1) {
+    if (_super != 1 || sprite == secondBallVar) {
         sprite.setVelocity(1 * sprite.vx, -1 * sprite.vy)
     }
     numBricks += -1
@@ -459,10 +462,10 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.ballBrick, function (sprite, other
 })
 let brick2: Sprite = null
 let ranNum = 0
-let secondBallVar: Sprite = null
 let ballProjectile: Sprite = null
 let hpProjectile: Sprite = null
 let superProjectile: Sprite = null
+let secondBallVar: Sprite = null
 let _super = 0
 let col = 0
 let Paddle: Sprite = null
@@ -760,9 +763,11 @@ game.onUpdate(function () {
 })
 forever(function () {
     if (numBricks == 0) {
-        for (let index = 0; index < secondBallVarNum; index++) {
+        while (secondBallVarNum != -1) {
             secondBallVar.destroy()
+            secondBallVarNum += -1
         }
+        secondBallVarNum = 0
         startBallVar = 0
         info.changeScoreBy(100)
         effects.confetti.startScreenEffect()
