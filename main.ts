@@ -38,6 +38,9 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.superBrick, function (sprite, othe
 2 2 2 2 2 2 2 
 . 2 2 2 2 2 . 
 `, otherSprite, 0, 50)
+    if (numBricks == 0) {
+        superProjectile.destroy()
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
     if (otherSprite == superProjectile) {
@@ -80,6 +83,9 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.hpBrick, function (sprite, otherSp
 . . 2 2 2 . . 
 . . . 2 . . . 
 `, otherSprite, 0, 50)
+    if (numBricks == 0) {
+        hpProjectile.destroy()
+    }
 })
 sprites.onOverlap(SpriteKind.ball, SpriteKind.Player, function (sprite, otherSprite) {
     sprite.setVelocity((sprite.x - otherSprite.x) * 3, -1 * sprite.vy)
@@ -456,6 +462,9 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.ballBrick, function (sprite, other
 8 8 8 8 
 . 8 8 . 
 `, otherSprite, 0, 50)
+    if (numBricks == 0) {
+        ballProjectile.destroy()
+    }
 })
 let brick2: Sprite = null
 let ranNum = 0
@@ -465,6 +474,7 @@ let superProjectile: Sprite = null
 let secondBallVar: Sprite = null
 let _super = 0
 let col = 0
+let numBricks = 0
 let Paddle: Sprite = null
 let startBallVar = 0
 scene.setBackgroundColor(6)
@@ -736,7 +746,7 @@ let ballVar = sprites.create(img`
 ballVar.setFlag(SpriteFlag.StayInScreen, true)
 info.setLife(3)
 info.setScore(0)
-let numBricks = 0
+numBricks = 0
 col = 0
 let secondBallVarNum = 0
 buildSetBricks()
@@ -764,9 +774,6 @@ forever(function () {
             secondBallVar.destroy()
             secondBallVarNum += -1
         }
-        ballProjectile.destroy()
-        hpProjectile.destroy()
-        superProjectile.destroy()
         secondBallVarNum = 0
         startBallVar = 0
         info.changeScoreBy(100)
