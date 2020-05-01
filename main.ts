@@ -16,9 +16,6 @@ sprites.onOverlap(SpriteKind.ball, SpriteKind.brick, function (sprite, otherSpri
     numBricks += -1
     info.changeScoreBy(15)
 })
-function bounce () {
-	
-}
 sprites.onOverlap(SpriteKind.ball, SpriteKind.wall, function (sprite, otherSprite) {
     sprite.setVelocity(-1 * sprite.vx, 1 * sprite.vy)
 })
@@ -767,6 +764,9 @@ forever(function () {
             secondBallVar.destroy()
             secondBallVarNum += -1
         }
+        ballProjectile.destroy()
+        hpProjectile.destroy()
+        superProjectile.destroy()
         secondBallVarNum = 0
         startBallVar = 0
         info.changeScoreBy(100)
